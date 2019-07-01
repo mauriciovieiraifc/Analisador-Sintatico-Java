@@ -1,0 +1,93 @@
+package sintatico;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+
+    public void syntax_error(Symbol s) {
+        this.s = s;
+    }
+
+    public Symbol getS() {
+        return this.s;
+    }
+}
+:};
+
+terminal Igual, Aspas, String, Int, If, Else, For, Public, Static, Void, Main, Do, While, Tipo_Dado,
+    Operador_Logico, Operador_Relacional, Operador_Atribuicao, Operador_Incremento,
+    Operador_Booleano, Operador_Aritmetico, Linha, Abre_Parenteses, Fecha_Parenteses,
+    Abre_Chaves, Fecha_Chaves, Ponto_Virgula, Identificador, Numero, ERROR;
+non terminal INICIO, SENTENCA, DECLARACAO, IF, IF_ELSE, SENTENCA_BOOLEANA, WHILE,
+    DO_WHILE, FOR, SENTENCA_FOR, DECLARACAO_FOR;
+
+start with INICIO;
+
+INICIO ::= Public Static Void Main Abre_Parenteses Fecha_Parenteses Abre_Chaves SENTENCA Fecha_Chaves
+| Int Main Abre_Parenteses Fecha_Parenteses Abre_Chaves SENTENCA Fecha_Chaves
+;
+
+SENTENCA ::= SENTENCA DECLARACAO
+| DECLARACAO
+| SENTENCA IF
+| IF
+| SENTENCA IF_ELSE
+| IF_ELSE
+| SENTENCA WHILE
+| WHILE
+| SENTENCA DO_WHILE
+| DO_WHILE
+| SENTENCA FOR
+| FOR
+;
+
+DECLARACAO ::= Tipo_Dado Identificador Ponto_Virgula
+| Int Identificador Ponto_Virgula
+| Int Identificador Igual Numero Ponto_Virgula
+| String Identificador Ponto_Virgula
+| Identificador Operador_Incremento Ponto_Virgula
+| Identificador Operador_Atribuicao Numero Ponto_Virgula
+| Identificador Igual Numero Ponto_Virgula
+| String Identificador Igual Aspas Aspas Ponto_Virgula
+| String Identificador Igual Aspas Identificador Aspas Ponto_Virgula
+;
+
+IF ::= If Abre_Parenteses SENTENCA_BOOLEANA Fecha_Parenteses Abre_Chaves
+SENTENCA Fecha_Chaves
+;
+
+IF_ELSE ::= If Abre_Parenteses SENTENCA_BOOLEANA Fecha_Parenteses Abre_Chaves
+SENTENCA Fecha_Chaves Else Abre_Chaves SENTENCA Fecha_Chaves
+;
+
+SENTENCA_BOOLEANA ::= Operador_Booleano
+| Identificador Operador_Relacional Operador_Booleano
+| Identificador Operador_Relacional Numero
+| Identificador Operador_Relacional Identificador
+| Identificador Operador_Relacional Aspas Aspas
+| Identificador Operador_Relacional Aspas Identificador Aspas
+;
+
+WHILE ::= While Abre_Parenteses SENTENCA_BOOLEANA Fecha_Parenteses Abre_Chaves
+SENTENCA Fecha_Chaves
+;
+
+DO_WHILE ::= Do Abre_Chaves SENTENCA Fecha_Chaves While Abre_Parenteses
+SENTENCA_BOOLEANA Fecha_Parenteses Ponto_Virgula
+;
+
+FOR ::= For Abre_Parenteses SENTENCA_FOR Fecha_Parenteses Abre_Chaves SENTENCA Fecha_Chaves
+;
+
+SENTENCA_FOR ::= Int Identificador Igual Numero Ponto_Virgula SENTENCA_BOOLEANA 
+Ponto_Virgula DECLARACAO_FOR
+| Identificador Igual Numero Ponto_Virgula SENTENCA_BOOLEANA Ponto_Virgula DECLARACAO_FOR
+;
+
+DECLARACAO_FOR ::= Identificador Operador_Atribuicao Numero
+| Identificador Igual Numero
+| Identificador Operador_Incremento
+| Operador_Incremento Identificador
+;
