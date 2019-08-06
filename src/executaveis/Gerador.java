@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 public class Gerador {
 
     public static void gerar(String path1, String path2, String[] pathS) throws IOException, Exception {
+        String home = "/home/mauricio/NetBeansProjects/AnalisadorSintatico"; 
+        
         File file;
 
         file = new File(path1);
@@ -30,24 +32,24 @@ public class Gerador {
 
         java_cup.Main.main(pathS);
 
-        Path pathSym = Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/src/sintatico/sym.java");
+        Path pathSym = Paths.get(home + "/src/sintatico/sym.java");
         if (Files.exists(pathSym)) {
             Files.delete(pathSym);
         }
 
         Files.move(
-                Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/sym.java"),
-                Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/src/sintatico/sym.java")
+                Paths.get(home + "/sym.java"),
+                Paths.get(home + "/src/sintatico/sym.java")
         );
 
-        Path pathSin = Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/src/sintatico/Sintatico.java");
+        Path pathSin = Paths.get(home + "/src/sintatico/Sintatico.java");
         if (Files.exists(pathSin)) {
             Files.delete(pathSin);
         }
 
         Files.move(
-                Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/Sintatico.java"),
-                Paths.get("/home/mauricio/NetBeansProjects/AnalisadorSintatico/src/sintatico/Sintatico.java")
+                Paths.get(home + "/Sintatico.java"),
+                Paths.get(home + "/src/sintatico/Sintatico.java")
         );
     }
 
